@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Цена откладывания на потом</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .input-section {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2d3748;
+            font-weight: 600;
+        }
+        
+        input[type="number"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        
+        .btn-calculate {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-calculate:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+        
+        .btn-reset {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+        
+        .btn-reset:hover {
+            background: #cbd5e0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+            font-weight: 500;
+        }
+        
+        .year-col {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        
+        .amount {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+            color: #2d3748;
+        }
+        
+        .warning {
+            background: #fed7d7;
+            border: 2px solid #fc8181;
+            border-radius: 15px;
+padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .warning h3 {
+            color: #c53030;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+        
+        .warning p {
+            color: #742a2a;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        
+        .total-lost {
+            background: linear-gradient(135deg, #ff7675, #fd79a8);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .total-lost h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .total-lost .amount {
+            font-size: 32px;
+            font-weight: bold;
+        }
+        
+        .question {
+            background: #e6fffa;
+            border-left: 5px solid #38b2ac;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 10px;
+        }
+        
+        .question h4 {
+            color: #234e52;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .question p {
+            color: #2c7a7b;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+            
+            table {
+                font-size: 14px;
+            }
+            
+            th, td {
+                padding: 10px 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1> ЦЕНА ОТКЛАДЫВАНИЯ НА ПОТОМ</h1>
+        <p class="subtitle">Узнай, сколько денег ты теряешь каждый месяц промедления</p>
+        
+        <div class="input-section">
+            <div class="input-group">
+                <label for="income"> На сколько ты хочешь увеличить доход? (в месяц)</label>
+                <input type="number" id="income" placeholder="Например: 50000" min="0" step="1000">
+            </div>
+        </div>
+        
+        <div class="buttons">
+            <button class="btn-calculate" onclick="calculateTable()"> Рассчитать мои потери</button>
+            <button class="btn-reset" onclick="resetTable()"> Сбросить</button>
+        </div>
+        
+        <table id="resultTable" style="display: none;">
+            <thead>
+                <tr>
+                    <th> Год</th>
+                    <th> Потерянный доход</th>
+                    <th> Накопительно</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+        
+        <div id="totalSection" style="display: none;">
+            <div class="total-lost">
+                <h3> ОБЩИЕ ПОТЕРИ ЗА 5 ЛЕТ:</h3>
+                <div class="amount" id="totalAmount">0 ₽</div>
+            </div>
+            
+            <div class="warning">
+                <h3> ВНИМАНИЕ!</h3>
+                <p>Каждый месяц промедления стоит тебе <strong id="monthlyLoss">0 ₽</strong></p>
+                <p>Каждый день откладывания = <strong id="dailyLoss">0 ₽</strong> потерь</p>
+            </div>
+            
+            <div class="question">
+                <h4> Честный вопрос к себе:</h4>
+                <p>• <strong>Готова ли ты потерять эти деньги?</strong></p>
+                <p>• <strong>Сколько еще лет ты будешь откладывать?</strong></p>
+                <p>• <strong>Что изменится в твоей жизни через 5 лет, если ты ничего не предпримешь?</strong></p>
+            </div>
+        </div>
+        
+        <div class="question">
+            <h4> Помни:</h4>
+            <p><strong>Время — единственный невосполнимый ресурс.</strong></p>
+            <p>Деньги можно заработать, но потерянные годы не вернуть.</p>
+<p><strong>Лучшее время начать — год назад. Второе лучшее время — СЕЙЧАС!</strong></p>
+        </div>
+    </div>
+
+    <script>
+        function calculateTable() {
+            const income = parseInt(document.getElementById('income').value);
+            
+            if (!income || income <= 0) {
+                alert('Пожалуйста, введите сумму больше 0');
+                return;
+            }
+            
+            const tableBody = document.getElementById('tableBody');
+            const resultTable = document.getElementById('resultTable');
+            const totalSection = document.getElementById('totalSection');
+            
+            tableBody.innerHTML = '';
+            
+            let cumulative = 0;
+            
+            for (let year = 1; year <= 5; year++) {
+                const yearlyIncome = income * 12;
+                cumulative += yearlyIncome;
+                
+                const row = tableBody.insertRow();
+                row.innerHTML = `
+                    <td class="year-col">${year}-й год</td>
+                    <td class="amount">${formatNumber(yearlyIncome)} ₽</td>
+                    <td class="amount highlight">${formatNumber(cumulative)} ₽</td>
+                `;
+            }
+            
+            document.getElementById('totalAmount').textContent = formatNumber(cumulative) + ' ₽';
+            document.getElementById('monthlyLoss').textContent = formatNumber(income) + ' ₽';
+            document.getElementById('dailyLoss').textContent = formatNumber(Math.round(income / 30)) + ' ₽';
+            
+            resultTable.style.display = 'table';
+            totalSection.style.display = 'block';
+            
+            // Плавная прокрутка к результатам
+            resultTable.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function resetTable() {
+            document.getElementById('income').value = '';
+            document.getElementById('resultTable').style.display = 'none';
+            document.getElementById('totalSection').style.display = 'none';
+        }
+        
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+        }
+        
+        // Автоматический расчет при вводе (с задержкой)
+        let timeoutId;
+        document.getElementById('income').addEventListener('input', function() {
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                if (this.value && parseInt(this.value) > 0) {
+                    calculateTable();
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

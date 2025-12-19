@@ -43,12 +43,12 @@
         }
         .button-container {
             padding: 16px;
-            background: transparent; /* Убран фон */
+            background: transparent;
         }
         button {
             width: 100%;
             padding: 16px;
-            background: #0088cc!IMPORTANT;
+            background: #0088cc;
             color: white;
             border: none;
             border-radius: 8px;
@@ -58,7 +58,7 @@
             transition: background 0.3s ease;
         }
         button:active {
-            background: #006699!IMPORTANT;
+            background: #006699;
         }
         
         /* Для очень маленьких экранов */
@@ -92,7 +92,7 @@
         </div>
     </div>
     <div class="button-container">
-        <a href="https://t.me/m/Wkg3O_U5NDUy" class="button">Я посмотрела, хочу отправить ДЗ!</a>
+        <button onclick="sendHomework()">Я посмотрела, хочу отправить ДЗ!</button>
     </div>
     <script>
         // Инициализация Telegram WebApp
@@ -117,10 +117,12 @@
         });
         
         function sendHomework() {
+            // Открываем ссылку через Telegram WebApp
             if (window.Telegram && window.Telegram.WebApp) {
-                window.Telegram.WebApp.close();
+                window.Telegram.WebApp.openTelegramLink('https://t.me/m/Wkg3O_U5NDUy');
             } else {
-                alert('Видео просмотрено!');
+                // Fallback на случай, если не в Telegram
+                window.location.href = 'https://t.me/m/Wkg3O_U5NDUy';
             }
         }
     </script>
